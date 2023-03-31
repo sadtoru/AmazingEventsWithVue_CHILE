@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./assets/img/faviconAmazingEvents.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/styles/styles.css">
+    <title>Home</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg bg-primary">
+            <div class="container-fluid">
+                <img class="navbar-brand logo-img" src="./assets/img/logo_amazing_events.png" alt="Logo Amazing Events">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-lg-0 text-center">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./pages/upcomingEvents.html">Upcoming Events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./pages/pastEvents.html">Past Events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./pages/contact.html">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./pages/stats.html">Stats</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <header>
+            <!-- carousel -->
+            <div id="carouselExample" class="carousel slide">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row justify-content-center align-items-center text-center">
+                            <div class="col-12">
+                                <img class="img-slider pt-5" src="./assets/img/home1.jpg" alt="Image home 1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row justify-content-center text-center">
+                            <div class="col-12">
+                                <img class="img-slider pt-5" src="./assets/img/home2.jpg" alt="Image home 2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row justify-content-center text-center">
+                            <div class="col-12">
+                                <img class="img-slider pt-5" src="./assets/img/home3.jpeg" alt="Image home 3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                    data-bs-slide="prev">
+                    <span aria-hidden="true"><i class="bi bi-caret-left-fill prev"></i></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                    data-bs-slide="next">
+                    <span aria-hidden="true"><i class="bi bi-caret-right-fill next"></i></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                <div class="container">
+                    <div class="row text-center pt-3">
+                        <div class="col-12">
+                            <h1>Home</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="container">
+                <!-- categorias  -->
+                <div class="row pt-4">
+                    <div class="col-12 d-lg-flex justify-content-center">
+                        <!-- acá pinta las categorias -->
+                        <div v-for="category of categories" class="form-check form-check-inline">
+                            <input v-model="selectedCategories" class="form-check-input" type="checkbox" :id="category"
+                                :value="category">
+                            <label class="form-check-label" :for="category">{{category}}</label>
+                        </div>
+                    </div>
+                    <!-- busqueda -->
+                    <div class="col-12">
+                        <div class="d-flex justify-content-center pt-4">
+                            <form class="d-flex" role="search">
+                                <input v-model="text" class="form-control search mx-2" id="search" type="search"
+                                    placeholder="Search" aria-label="Search">
+                                {{superFilter}}
+                                <button class="btn btn-light" type="submit">
+                                    <i class="bi bi-search-heart"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- cards -->
+                <div class="row py-5 text-center">
+                    <!-- texto a mostrar si la longitud de la lista es 0 -->
+                    <p v-if="!showEvents.length" class="text-center pt-5 fw-bolder">Oops! Nothing to see here</p>
+                    <!-- acá van las cards -->
+                    <div v-for="event of showEvents" :key="event.id" class="col-12 col-md-6 col-lg-3 gap-4 mt-3">
+                        <div class="card h-100">
+                            <img :src="event.image" class="card-img-top img-thumbnail p-3" :alt="event.name">
+                            <div class="card-body">
+                                <h5 class="card-title">{{event.name}}</h5>
+                                <p class="card-text">{{event.description}}</p>
+                                <p class="card-text category">{{event.category}}</p>
+                                <p class="card-text">{{event.date}}</p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <h6 class="mx-2 pt-2">${{event.price}}</h6>
+                                    <a class="btn-more py-2 px-2 text-light mx-2"
+                                        :href="'./pages/details.html?id=' + event._id">Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- footer -->
+    <footer>
+        <div class="container align-bottom py-2">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="container-social">
+                    <a href="#"><i class="bi bi-instagram m-3 px-2 py-1"></i></a>
+                    <a href="#"><i class="bi bi-facebook m-3 px-2 py-1"></i></a>
+                    <a href="#"><i class="bi bi-whatsapp m-3 px-2 py-1"></i></a>
+                </div>
+                <div>
+                    <h2 class="text-light">FE11-TM</h2>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./scripts/main.js"></script>
+</body>
+
+</html>
